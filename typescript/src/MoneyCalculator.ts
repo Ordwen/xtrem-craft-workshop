@@ -1,7 +1,11 @@
-import { Currency } from './Currency'
+export function add(amount: number, amount2: number): number {
+  return amount + amount2
+}
 
-export class MoneyCalculator {
-  static Add = (amount: number, currency: Currency, amount2: number): number => amount + amount2
-  static Times = (amount: number, currency: Currency, number: number): number => amount * number
-  static Divide = (amount: number, currency: Currency, value: number): number => amount / value
+export function times(amount: number, number: number) {
+  return amount * number
+}
+
+export function divide(amount: number, value: number) {
+  return amount / value
 }

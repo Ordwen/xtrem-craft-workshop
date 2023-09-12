@@ -1,39 +1,41 @@
-import {Currency} from './Currency'
-import {MissingExchangeRateError} from './MissingExchangeRateError'
+import { Currency } from './Currency'
+import { MissingExchangeRateError } from './MissingExchangeRateError'
 
 export class Bank {
   private readonly _exchangeRates: Map<string, number> = new Map()
 
   /**
-   * @param currency1
-   * @param currency2
+   * @param from
+   * @param to
    * @param rate
    */
-  static withExchangeRate (currency1: Currency, currency2: Currency, rate: number): Bank {
+  static createBankWithExchangeRate (from: Currency, to: Currency, rate: number): Bank {
     const bank = new Bank()
-    bank.AddExchangeRate(currency1, currency2, rate)
+    bank.addExchangeRate(from, to, rate)
     return bank
   }
 
   /**
-   * @param currency1
-   * @param currency2
+   * @param from
+   * @param to
    * @param rate
    */
-  AddExchangeRate (currency1: Currency, currency2: Currency, rate: number): void {
-    this._exchangeRates.set(currency1 + '->' + currency2, rate)
+  addExchangeRate (from: Currency, to: Currency, rate: number): void {
+    this._exchangeRates.set(from + '->' + to, rate)
   }
 
   /**
+   * @param from
+   * @param to
    * @param amount
-   * @param currency1
-   * @param currency2
    */
-  Convert (amount: number, currency1: Currency, currency2: Currency): number {
-    if (!(currency1 === currency2 || this._exchangeRates.has(currency1 + '->' + currency2))) { throw new MissingExchangeRateError(currency1, currency2) }
+  convert (from: Currency, to: Currency, amount: number): number {
+    if (from === to) return amount
 
-    return currency2 === currency1
-        ? amount
-        : amount * this._exchangeRates.get(currency1 + '->' + currency2)
+    else if (this._exchangeRates.has(from + '->' + to)) {
+      return amount * this._exchangeRates.get(from + '->' + to)
+    }
+
+    throw new MissingExchangeRateError(from, to)
   }
 }
