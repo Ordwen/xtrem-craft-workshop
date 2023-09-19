@@ -15,8 +15,7 @@ describe('Bank', function () {
   })
 
   test('convert throws error in case of missing exchange rates', () => {
-    expect(() => bank1point2.convert(Currency.EUR, Currency.KRW, 10))
-      .toThrow(MissingExchangeRateError)
+    expect(() => bank1point2.convert(Currency.EUR, Currency.KRW, 10)).toThrowWithMessage(MissingExchangeRateError,"No exchange rate from EUR to KRW")
   })
 
   test('convert with different exchange rates returns different numbers', () => {
