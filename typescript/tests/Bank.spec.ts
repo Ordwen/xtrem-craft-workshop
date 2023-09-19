@@ -18,10 +18,10 @@ describe('Bank', function () {
   })
 
   test('convert with different exchange rates returns different numbers', () => {
-    expect(bank1point2.convert(Currency.EUR, Currency.USD, 10)).toBe(12)
-
     const bank1point3 = Bank.createBankWithExchangeRate(Currency.EUR, Currency.USD, 1.3)
     const bank1point5 = Bank.createBankWithExchangeRate(Currency.EUR, Currency.USD, 1.5)
+
+    expect(bank1point2.convert(Currency.EUR, Currency.USD, 10)).toBe(12)
     expect(bank1point3.convert(Currency.EUR, Currency.USD, 10)).toBe(13)
     expect(bank1point5.convert(Currency.EUR, Currency.USD, 10)).toBe(15)
   })
