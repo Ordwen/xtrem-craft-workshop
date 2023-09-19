@@ -1,4 +1,4 @@
-import { MoneyCalculator } from '../src/MoneyCalculator'
+import * as MoneyCalculator from '../src/MoneyCalculator'
 
 describe('Money', function () {
   test('add in usd returns number', () => {
