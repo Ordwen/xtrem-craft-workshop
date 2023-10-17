@@ -11,8 +11,7 @@ on:
 
 defaults:
   run:
-    shell: bash
-    working-directory: ./scripts
+    working-directory: ./typescript
     
 jobs:
   build:
@@ -31,9 +30,6 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
     - run: npm ci
-      working-directory: ./typescript
     - run: npm run build --if-present
-      working-directory: ./typescript
     - run: npm test
-      working-directory: ./typescript
 
