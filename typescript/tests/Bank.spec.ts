@@ -5,17 +5,17 @@ import { MissingExchangeRateError } from '../src/MissingExchangeRateError'
 describe('Bank', function () {
   const bank1point2 = Bank.createBankWithExchangeRate(Currency.EUR, Currency.USD, 1.2)
   test('convert from eur to usd returns number', () => {
-    let valueAfterConvertion = bank1point2.convert(Currency.EUR, Currency.USD, 10)
+    const valueAfterConvertion = bank1point2.convert(Currency.EUR, Currency.USD, 10)
     expect(valueAfterConvertion).toBe(12)
   })
 
   test('convert from usd to usd returns same value', () => {
-    let valueAfterConvertion = bank1point2.convert(Currency.USD, Currency.USD, 10)
+    const valueAfterConvertion = bank1point2.convert(Currency.USD, Currency.USD, 10)
     expect(valueAfterConvertion).toBe(10)
   })
 
   test('convert throws error in case of missing exchange rates', () => {
-    expect(() => bank1point2.convert(Currency.EUR, Currency.KRW, 10)).toThrowWithMessage(MissingExchangeRateError,"No exchange rate from EUR to KRW")
+    expect(() => bank1point2.convert(Currency.EUR, Currency.KRW, 10)).toThrowWithMessage(MissingExchangeRateError, 'No exchange rate from EUR to KRW')
   })
 
   test('convert with different exchange rates returns different numbers', () => {
@@ -31,5 +31,21 @@ describe('Bank', function () {
 
     valueAfterConvertion = bank1point5.convert(Currency.EUR, Currency.USD, 10)
     expect(valueAfterConvertion).toBe(15)
+  })
+
+  test('convert with missing exchange rate uses public exchange rate', () => {
+    const bank = Bank.createBankWithExchangeRate(Currency.EUR, Currency.USD, 1.2)
+    const valueAfterConvertion = bank.convert(Currency.EUR, Currency.USD, 10)
+    expect(valueAfterConvertion).toBe(12)
+
+    expect(() => bank.convert(Currency.EUR, Currency.KRW, 10)).toThrow(MissingExchangeRateError)
+
+    expect(() => bank.convert(Currency.KRW, Currency.EUR, 10)).toThrow(MissingExchangeRateError)
+
+    expect(() => bank.convert(Currency.KRW, Currency.USD, 10)).toThrow(MissingExchangeRateError)
+
+    expect(() => bank.convert(Currency.USD, Currency.KRW, 10)).toThrow(MissingExchangeRateError)
+
+    expect(() => bank.convert(Currency.USD, Currency.EUR, 10)).toThrow(MissingExchangeRateError)
   })
 })
