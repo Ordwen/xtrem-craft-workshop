@@ -36,10 +36,10 @@ export class Bank {
     if (!(money.currency === to || this._exchangeRates.has(from + "->" + to))) {
       throw new MissingExchangeRateError(from, to)
     }
-    if (from === to) return amount
+    if (from === to) return money.amount
 
     if (this._exchangeRates.has(from + '->' + to)) {
-      return amount * this._exchangeRates.get(from + '->' + to)
+      return money.amount * this._exchangeRates.get(from + '->' + to)
     }
   }
 }
