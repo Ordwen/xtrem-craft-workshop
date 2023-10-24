@@ -1,4 +1,5 @@
 import { Currency } from './Currency'
+import { CurrencyMismatchError } from './CurrencyMismatchError'
 
 export class Money {
   currency: Currency
@@ -12,25 +13,25 @@ export class Money {
   add (money: Money): Money {
     if (money.currency === this.currency) {
       return new Money(money.amount + this.amount, this.currency)
-    } else {
-      return null
     }
+
+    throw new CurrencyMismatchError(this, money)
   }
 
   times (money: Money): Money {
     if (money.currency === this.currency) {
       return new Money(money.amount * this.amount, this.currency)
-    } else {
-      return null
     }
+
+    throw new CurrencyMismatchError(this, money)
   }
 
   divide (money: Money): Money {
     if (money.currency === this.currency) {
       return new Money(this.amount / money.amount, this.currency)
-    } else {
-      return null
     }
+
+    throw new CurrencyMismatchError(this, money)
   }
 
   equals (money: Money): boolean {
