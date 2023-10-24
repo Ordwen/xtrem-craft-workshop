@@ -49,4 +49,17 @@ describe('Money', function () {
     expect(mult).toEqual(new Money(0, Currency.USD))
     expect(money).toEqual(new Money(5, Currency.USD))
   })
+
+  test('divide by a valid number', () => {
+    const money = new Money(10, Currency.USD)
+    const divided = money.divide(2)
+
+    expect(divided).toEqual(new Money(5, Currency.USD))
+    expect(money).toEqual(new Money(10, Currency.USD))
+  })
+
+  test('divide by 0 throws an error', () => {
+    const money = new Money(10, Currency.USD)
+    expect(() => money.divide(0)).toThrow()
+  })
 })

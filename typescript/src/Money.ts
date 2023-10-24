@@ -1,5 +1,6 @@
 import { Currency } from './Currency'
 import { CurrencyMismatchError } from './CurrencyMismatchError'
+import { IllegalDivider } from './IllegalDivider'
 
 export class Money {
   public readonly currency: Currency
@@ -23,6 +24,7 @@ export class Money {
   }
 
   divide (value: number): Money {
+    if (value <= 0) throw new IllegalDivider(value)
     return new Money(this.amount / value, this.currency)
   }
 
