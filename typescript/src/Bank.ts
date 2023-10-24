@@ -31,7 +31,7 @@ export class Bank {
    * @param to
    * @param amount
    */
-  convert (from: Currency, to: Currency, amount: number, money: Money = new Money(amount,from)): number {
+  convert (to: Currency, money: Money ): number {
     if (!(money.currency === to || this._exchangeRates.has(money.currency + "->" + to))) {
       throw new MissingExchangeRateError(money.currency, to)
     }

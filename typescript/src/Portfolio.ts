@@ -13,7 +13,8 @@ export default class Portfolio {
   evaluate (to: Currency, bank: Bank): number {
     let total = 0
     for (const [from, amount] of this._amounts) {
-      total += bank.convert(from, to, amount)
+      let money = new Money(amount,from)
+      total += bank.convert(to,money)
     }
 
     return total
