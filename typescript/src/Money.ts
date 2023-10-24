@@ -18,20 +18,12 @@ export class Money {
     throw new CurrencyMismatchError(this, money)
   }
 
-  times (money: Money): Money {
-    if (money.currency === this.currency) {
-      return new Money(money.amount * this.amount, this.currency)
-    }
-
-    throw new CurrencyMismatchError(this, money)
+  times (value: number): Money {
+    return new Money(this.amount * value, this.currency)
   }
 
-  divide (money: Money): Money {
-    if (money.currency === this.currency) {
-      return new Money(this.amount / money.amount, this.currency)
-    }
-
-    throw new CurrencyMismatchError(this, money)
+  divide (value: number): Money {
+    return new Money(this.amount / value, this.currency)
   }
 
   equals (money: Money): boolean {
