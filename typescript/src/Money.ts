@@ -1,11 +1,21 @@
 import { Currency } from './Currency'
 import { CurrencyMismatchError } from './CurrencyMismatchError'
+import { InfiniteMoneyError } from './InfiniteMoneyError'
+import { NegativeMoneyError } from './NegativeMoneyError'
 
 export class Money {
   public readonly currency: Currency
   public readonly amount: number
 
   constructor (amount: number, currency: Currency) {
+    if (!isFinite(amount)) {
+      throw new InfiniteMoneyError()
+    }
+
+    if (amount < 0) {
+      throw new NegativeMoneyError()
+    }
+
     this.currency = currency
     this.amount = amount
   }
