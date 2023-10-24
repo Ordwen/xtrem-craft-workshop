@@ -1,5 +1,7 @@
+import { number } from 'fp-ts'
 import { Currency } from './Currency'
 import { MissingExchangeRateError } from './MissingExchangeRateError'
+import { Money } from './Money'
 
 export class Bank {
   private readonly _exchangeRates: Map<string, number> = new Map()
@@ -30,12 +32,14 @@ export class Bank {
    * @param amount
    */
   convert (from: Currency, to: Currency, amount: number): number {
+    const money: Money = new Money(amount, from)
+    if (!(money.currency === to || this._exchangeRates.has(from + "->" + to))) {
+      throw new MissingExchangeRateError(from, to)
+    }
     if (from === to) return amount
 
-    else if (this._exchangeRates.has(from + '->' + to)) {
+    if (this._exchangeRates.has(from + '->' + to)) {
       return amount * this._exchangeRates.get(from + '->' + to)
     }
-
-    throw new MissingExchangeRateError(from, to)
   }
 }
