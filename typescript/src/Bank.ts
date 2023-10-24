@@ -31,15 +31,14 @@ export class Bank {
    * @param to
    * @param amount
    */
-  convert (from: Currency, to: Currency, amount: number): number {
-    const money: Money = new Money(amount, from)
-    if (!(money.currency === to || this._exchangeRates.has(from + "->" + to))) {
-      throw new MissingExchangeRateError(from, to)
+  convert (from: Currency, to: Currency, amount: number, money: Money = new Money(amount,from)): number {
+    if (!(money.currency === to || this._exchangeRates.has(money.currency + "->" + to))) {
+      throw new MissingExchangeRateError(money.currency, to)
     }
-    if (from === to) return money.amount
+    if (money.currency === to) return money.amount
 
-    if (this._exchangeRates.has(from + '->' + to)) {
-      return money.amount * this._exchangeRates.get(from + '->' + to)
+    if (this._exchangeRates.has(money.currency + '->' + to)) {
+      return money.amount * this._exchangeRates.get(money.currency + '->' + to)
     }
   }
 }
