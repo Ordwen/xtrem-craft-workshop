@@ -2,8 +2,8 @@ import { Currency } from './Currency'
 import { CurrencyMismatchError } from './CurrencyMismatchError'
 
 export class Money {
-  currency: Currency
-  amount: number
+  public readonly currency: Currency
+  public readonly amount: number
 
   constructor (amount: number, currency: Currency) {
     this.currency = currency
