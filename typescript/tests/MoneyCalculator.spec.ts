@@ -23,4 +23,14 @@ describe('Money', function () {
     expect(sum).toEqual(new Money(15, Currency.USD))
     expect(money).toEqual(new Money(5, Currency.USD))
   })
+
+  test('equals returns true when currencies and amounts are the same', () => {
+    const money = new Money(5, Currency.USD)
+    const otherMoney = new Money(5, Currency.USD)
+
+    expect(money.equals(otherMoney)).toBeTruthy()
+
+    const moneyInEur = new Money(5, Currency.EUR)
+    expect(money.equals(moneyInEur)).toBeFalsy()
+  })
 })
