@@ -33,4 +33,20 @@ describe('Money', function () {
     const moneyInEur = new Money(5, Currency.EUR)
     expect(money.equals(moneyInEur)).toBeFalsy()
   })
+
+  test('should multiply money', () => {
+    const money = new Money(5, Currency.USD)
+    const mult = money.times(10)
+
+    expect(mult).toEqual(new Money(50, Currency.USD))
+    expect(money).toEqual(new Money(5, Currency.USD))
+  })
+
+  test('should result to 0 money', () => {
+    const money = new Money(5, Currency.USD)
+    const mult = money.times(0)
+
+    expect(mult).toEqual(new Money(0, Currency.USD))
+    expect(money).toEqual(new Money(5, Currency.USD))
+  })
 })
