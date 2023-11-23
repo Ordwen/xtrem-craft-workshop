@@ -4,7 +4,7 @@ import { Money } from '../src/Money'
 import { MissingExchangeRateError } from '../src/MissingExchangeRateError'
 
 describe('Bank', function () {
-  const bank1point2 = Bank.createBankWithExchangeRate(Currency.EUR, Currency.USD, 1.2)
+  const bank1point2 = Bank.withExchangeRate(Currency.EUR, Currency.USD, 1.2)
   test('convert from eur to usd returns number', () => {
     var money = new Money(10,Currency.EUR)
     const valueAfterConversion = bank1point2.convert(Currency.USD, money)
@@ -23,8 +23,8 @@ describe('Bank', function () {
   })
 
   test('convert with different exchange rates returns different numbers', () => {
-    const bank1point3 = Bank.createBankWithExchangeRate(Currency.EUR, Currency.USD, 1.3)
-    const bank1point5 = Bank.createBankWithExchangeRate(Currency.EUR, Currency.USD, 1.5)
+    const bank1point3 = Bank.withExchangeRate(Currency.EUR, Currency.USD, 1.3)
+    const bank1point5 = Bank.withExchangeRate(Currency.EUR, Currency.USD, 1.5)
     let valueAfterConversion: number
     var money = new Money(10,Currency.EUR)
     valueAfterConversion = bank1point2.convert(Currency.USD,money)
@@ -38,7 +38,7 @@ describe('Bank', function () {
   })
 
   test('convert with missing exchange rate uses public exchange rate', () => {
-    const bank = Bank.createBankWithExchangeRate(Currency.EUR, Currency.USD, 1.2)
+    const bank = Bank.withExchangeRate(Currency.EUR, Currency.USD, 1.2)
     var money = new Money(10,Currency.EUR)
     const valueAfterConvertion = bank.convert(Currency.USD,money)
     expect(valueAfterConvertion).toBe(12)
