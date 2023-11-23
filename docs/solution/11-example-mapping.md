@@ -35,3 +35,63 @@ So that I can evaluate the total amount in a currency
 ### Si même devise, pas de taux de change
 
 - 5 USD + 10 USD = 15 USD
+
+## Story 2: Define Pivot Currency
+
+```gherkin
+As a Foreign Exchange Expert
+I want to be able to define a Pivot Currency
+So that I can express exchange rates based on it
+```
+### Banque sans devise pivot
+> Que ce passe t'il quand pas de devise pivot ?
+- Pas de devise
+- Crée une banque 
+==> Erreur : devise pivot obligatoire
+
+## Story 3 : Add an exchange rate
+```gherkin
+As a Foreign Exchange Expert
+I want to add/update exchange rates by specifying: a multiplier rate and a currency
+So they can be used to evaluate client portfolios
+```
+### Ajout/modification du taux d'échange
+- Banque : EUR
+- TC : KRW -> 3 EUR
+==> 10 EUR -> 30 KRW
+- TC : KRW -> 4000 EUR
+==> 10 EUR -> 40000 KWR
+
+## Story 4: Convert a Money
+```gherkin
+As a Bank Consumer
+I want to convert a given amount in currency into another currency
+So it can be used to evaluate client portfolios
+```
+
+### Exchange with pivot curency
+- Banque : EUR
+- TC : USD -> 1.2
+-> Cnvert 10 EUR -> USD
+==> 12 USD
+
+### Round Tripping
+- Banque : EUR
+- TC : USD -> 1,2
+-> Convert 10 EUR -> USD -> EUR
+==> 9 <= resultat <= 11
+
+### Missing exchange rate
+- Banque : EUR
+- TC : USD -> 1,2
+-> Convert 10 EUR -> KRW
+==> Erreur : Taux d'échange manquent
+
+### Convert with pivot curency
+- Banque : EUR
+- TC : USD -> 1,2
+- TC : KRW -> 400
+-> Convert 10 USD -> KRW
+==> 10 USD -> EUR -> KRW
+-> Convert 10 USD -> KRW -> USD
+==> 9 <= resultat <= 11
