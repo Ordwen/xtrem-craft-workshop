@@ -36,6 +36,7 @@ So that I can evaluate the total amount in a currency
 
 - 5 USD + 10 USD = 15 USD
 
+<<<<<<< HEAD
 ## Story 2: Define Pivot Currency
 
 ```gherkin
@@ -95,3 +96,20 @@ So it can be used to evaluate client portfolios
 ==> 10 USD -> EUR -> KRW
 -> Convert 10 USD -> KRW -> USD
 ==> 9 <= resultat <= 11
+=======
+## Story 2: Add an exchange rate
+
+```gherkin
+As a Foreign Exchange Expert
+I want to add/update exchange rates by specifying: a multiplier rate and a currency
+So they can be used to evaluate client portfolios
+```
+
+### On peut mettre à jour et ajouter un taux de change
+
+- banque : eur
+- taux conversion : krw -> 3 
+  - 10eur -> 30krw
+- taux conversion : krw -> 4000
+  - 10eur -> 40000krw
+>>>>>>> e36a7a47cdbd5e2aae0d1795296cbdfed9adf9a9
