@@ -35,3 +35,19 @@ So that I can evaluate the total amount in a currency
 ### Si même devise, pas de taux de change
 
 - 5 USD + 10 USD = 15 USD
+
+## Story 2: Add an exchange rate
+
+```gherkin
+As a Foreign Exchange Expert
+I want to add/update exchange rates by specifying: a multiplier rate and a currency
+So they can be used to evaluate client portfolios
+```
+
+### On peut mettre à jour et ajouter un taux de change
+
+- banque : eur
+- taux conversion : krw -> 3 
+  - 10eur -> 30krw
+- taux conversion : krw -> 4000
+  - 10eur -> 40000krw
