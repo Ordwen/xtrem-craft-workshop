@@ -11,7 +11,7 @@ export class Bank {
    * @param to
    * @param rate
    */
-  static createBankWithExchangeRate (from: Currency, to: Currency, rate: number): Bank {
+  static withExchangeRate (from: Currency, to: Currency, rate: number): Bank {
     const bank = new Bank()
     bank.addExchangeRate(from, to, rate)
     return bank
