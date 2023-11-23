@@ -79,6 +79,17 @@ So it can be used to evaluate client portfolios
 - Banque : EUR
 - TC : USD -> 1,2
 -> Convert 10 EUR -> USD -> EUR
+==> 9 <= resultat <= 11  
+
+- Banque : EUR
+- TC : USD -> 1,2
+-> Convert 12 USD -> EUR -> USD
+==> 10,8 <= resultat <= 13.2  
+
+- Banque : EUR
+- TC : USD -> 1,2
+- TC : KRW -> 400
+-> Convert 10 USD -> KRW -> USD
 ==> 9 <= resultat <= 11
 
 ### Missing exchange rate
