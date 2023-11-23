@@ -1,4 +1,3 @@
-import { number } from 'fp-ts'
 import { Currency } from './Currency'
 import { MissingExchangeRateError } from './MissingExchangeRateError'
 import { Money } from './Money'
@@ -27,12 +26,11 @@ export class Bank {
   }
 
   /**
-   * @param from
    * @param to
-   * @param amount
+   * @param money
    */
-  convert (to: Currency, money: Money ): number {
-    if (!(money.currency === to || this._exchangeRates.has(money.currency + "->" + to))) {
+  convert (to: Currency, money: Money): number {
+    if (!(money.currency === to || this._exchangeRates.has(money.currency + '->' + to))) {
       throw new MissingExchangeRateError(money.currency, to)
     }
     if (money.currency === to) return money.amount
