@@ -64,8 +64,33 @@ describe('Bank', function () {
 
     expect(() => bank.convert(Currency.USD, money)).toThrow(MissingExchangeRateError)
 
-
     money = new Money(10, Currency.USD)
     expect(() => bank.convert(Currency.KRW, money)).toThrow(MissingExchangeRateError)
+  })
+
+  test('Round tripping doesn\'t exceed 1% error', () => {
+    const bank = BankBuilder.aBank()
+      .withPivotCurrency(Currency.EUR)
+      .withExchangeRate(Currency.USD, 1.2)
+      .build()
+
+    // convert 10 EUR to USD and back
+    const money = new Money(10, Currency.EUR)
+    const maxError = 0.01 * money.amount
+    const intermediate = bank.convert(Currency.USD, money)
+    const result = bank.convert(Currency.EUR, new Money(intermediate, Currency.USD))
+    expect(result).toBeLessThan(money.amount + maxError)
+    expect(result).toBeGreaterThan(money.amount - maxError)
+
+    // convert 10 EUR TO KRW and back
+    const bank2 = BankBuilder.aBank()
+      .withPivotCurrency(Currency.EUR)
+      .withExchangeRate(Currency.KRW, 1300)
+      .build()
+    const money2 = new Money(10, Currency.EUR)
+    const maxError2 = 0.01 * money2.amount
+    const intermediate2 = bank2.convert(Currency.KRW, money2)
+    const result2 = bank2.convert(Currency.EUR, new Money(intermediate2, Currency.KRW))
+    expect(result2).toBeLessThan(money2.amount + maxError2)
   })
 })

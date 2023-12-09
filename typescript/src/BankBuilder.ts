@@ -3,7 +3,10 @@ import { Currency } from './Currency'
 
 export class BankBuilder {
   private pivotCurrency: Currency
-  private readonly exchangeRates: Array<{ currency: Currency, rate: number }> = []
+  private readonly exchangeRates: Array<{
+    currency: Currency
+    rate: number
+  }> = []
 
   static aBank (): BankBuilder {
     return new BankBuilder()
@@ -25,7 +28,7 @@ export class BankBuilder {
     const bank = Bank.withExchangeRate(this.pivotCurrency, this.exchangeRates[0].currency, this.exchangeRates[0].rate)
     this.exchangeRates.forEach(exchangeRate => {
       bank.addExchangeRate(this.pivotCurrency, exchangeRate.currency, exchangeRate.rate)
-      bank.addExchangeRate(exchangeRate.currency, this.pivotCurrency, exchangeRate.rate)
+      bank.addExchangeRate(exchangeRate.currency, this.pivotCurrency, 1 / exchangeRate.rate)
     })
 
     return bank
